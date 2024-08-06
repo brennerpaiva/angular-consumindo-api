@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { Music } from "src/model/music.model";
+import { Music, MusicCadastrar } from "src/model/music.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,15 @@ export class MusicService {
     return this.httpClient.get<Music[]>(this.url);
   }
 
-  cadastrarMusica() {
-    return this.httpClient.get<Music[]>(this.url)
+  cadastrarMusica(musica: MusicCadastrar){
+    return this.httpClient.post<Music>(this.url, musica);
+  }
+
+  editarMusica(musica: Music){
+    return this.httpClient.put<Music>(`${this.url}/${musica.id}`, musica);
+  }
+
+  remover(id: number){
+    return this.httpClient.delete<void>(`${this.url}/${id}`);
   }
 }
